@@ -1,0 +1,25 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "this is backend project",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js",
+    "start": "node index.js",
+    "start:dev": "cross-env NODE_ENV=development node index.js",
+    "start:qa": "cross-env NODE_ENV=qa node index.js",
+    "start:prod": "cross-env NODE_ENV=production  node index.js"
+  },
+  "author": "udara chamara",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^3.3.3",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "knex": "^0.21.16",
+    "mysql": "^2.18.1",
+    "objection": "^2.2.7"
+  }
+}

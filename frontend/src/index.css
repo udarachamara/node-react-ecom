@@ -1,0 +1,7 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~lato-font/css/lato-font.css';
+
+*{
+    margin: 0;
+    padding: 0;
+}
