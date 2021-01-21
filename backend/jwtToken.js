@@ -15,4 +15,21 @@ function authToken(req, res, next) {
   })
 }
 
+function generateAccessToken(username) {
+  // expires after half and hour (1800 seconds = 30 minutes)
+  try {
+    return {
+      _token: jwt.sign("udara", config.get('app.ACCESS_TOKEN_SECRET')),
+      _error: false
+    }
+  } catch (error) {
+    return {
+      _error: true,
+      _message: 'Jwt signing failed..!'
+    }
+  }
+  
+}
+
 module.exports.authToken = authToken
+module.exports.getToken = generateAccessToken
