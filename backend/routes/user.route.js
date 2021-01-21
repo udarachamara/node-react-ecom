@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express.Router()
 const userController = require('../controllers/user.controller')
+const userValidate = require('../validation/userRequest.validation')
 
 
 app.get('/', function (req, res) {
@@ -25,6 +26,9 @@ app.get('/:id', function (req, res) {
 });
 
 app.post('/', function (req, res) {
+    let error = userValidate.validateBody(req.body).error
+    if(error) return res.status(400).send(error.details[0].message)
+
     userController.insertUser(req, res, function(data, err){
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify({ status: 200, data: data, error: err }));
@@ -32,6 +36,9 @@ app.post('/', function (req, res) {
 });
 
 app.put('/:id', function (req, res) {
+    let error = userValidate.validateBody(req.body).error
+    if(error) return res.status(400).send(error.details[0].message)
+    
     userController.updateUser(req, res,function(data, err){
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify({ status: 200, data: data, error: err }));

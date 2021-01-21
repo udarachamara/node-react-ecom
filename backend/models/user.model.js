@@ -35,8 +35,9 @@ class User extends Model {
     }
 
     static async updateUser(id,data){
-        const _user =  await User.query().findById(id).patch(data)
-        return _user
+        data['updated_at'] = new Date()
+        await User.query().findById(id).patch(data)
+        return User.getUserBy(id)
     }
 
     static async deleteUser(id){

@@ -9,6 +9,7 @@ const port = config.get('app.PORT');
 const apiPath = config.get('app.API_PATH') + config.get('app.API_VERSION')
 
 app.use(cors())
+app.use(express.json())
 app.use(`${apiPath}/user`,userRoutes)
 
 app.get('/', (req, res) => {
