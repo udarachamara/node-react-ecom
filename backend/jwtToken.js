@@ -8,27 +8,35 @@ function authToken(req, res, next) {
   if (token == null) return res.sendStatus(401) // if there isn't any token
 
   jwt.verify(token, config.get('app.ACCESS_TOKEN_SECRET'), (err, user) => {
-    console.log(err)
+    
     if (err) return res.sendStatus(403)
+
+    if(user.exp < Math.floor(Date.now())) return res.sendStatus(403)
+
     req.user = user
     next() // pass the execution off to whatever request the client intended
   })
 }
 
 function generateAccessToken(username) {
-  // expires after half and hour (1800 seconds = 30 minutes)
+  
   try {
     return {
-      _token: jwt.sign("udara", config.get('app.ACCESS_TOKEN_SECRET')),
+      _token: jwt.sign({
+        iat:Math.floor(Date.now()),
+        exp: Math.floor(Date.now()) + (parseInt(config.get('app.ACCESS_TOKEN_EXPIRE')) * 60 * 1000),
+        data: JSON.stringify(username)
+      }, config.get('app.ACCESS_TOKEN_SECRET'), { algorithm: "HS256" }),
       _error: false
     }
   } catch (error) {
+    console.log(error);
     return {
       _error: true,
       _message: 'Jwt signing failed..!'
     }
   }
-  
+
 }
 
 module.exports.authToken = authToken
